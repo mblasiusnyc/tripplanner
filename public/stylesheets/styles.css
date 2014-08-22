@@ -1,0 +1,30 @@
+body {
+  background-color: #E6E6E6;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  body #intro-text {
+    text-align: center; }
+  body nav {
+    display: block; }
+  body .row {
+    display: block;
+    margin: 0;
+    padding: 0; }
+  body .row-top {
+    height: 130px;
+    margin-top: 70px; }
+  body .row-bottom {
+    height: 80%; }
+  body #map-canvas {
+    min-width: 500px;
+    min-height: 600px;
+    border: 1px solid gray; }
+  body a {
+    color: #00B7FF; }
+  body button {
+    display: inline-block; }
+    body button #add-day {
+      display: block; }
+  body select {
+    margin-top: auto 0;
+    display: inline-block;
+    max-width: 200px; }

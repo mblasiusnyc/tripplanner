@@ -1,0 +1,52 @@
+body {
+  background-color: #E6E6E6;
+
+  #intro-text {
+    text-align: center;
+  }
+
+  nav {
+    display: block;
+  }
+
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+  .row {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .row-top {
+    height: 130px;
+    margin-top: 70px;
+  }
+  .row-bottom {
+    height: 80%;
+  }
+
+  #map-canvas {
+    min-width: 500px;
+    min-height: 600px;
+    border: 1px solid gray;
+  }
+  a {
+    color: #00B7FF;
+  }
+
+
+//---------------- BUTTON STYLES -------------------
+  button {
+    display: inline-block;
+    #add-day {
+      display: block;
+    }
+  }
+
+  select {
+    margin-top: auto 0;
+    display: inline-block;
+    max-width: 200px;
+  }
+
+}
+

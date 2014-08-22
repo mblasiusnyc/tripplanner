@@ -10,17 +10,33 @@ var users = require('./routes/users');
 
 var app = express();
 
+//self-added dependencies
+var swig = require('swig');
+var sass = require('node-sass');
+
 // view engine setup
+app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+  sass.middleware({
+    src: __dirname + '/assets', //where the sass files are
+    dest: __dirname + '/public', //where css should go
+    debug: true
+  })
+);
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use('/', routes);
 app.use('/users', users);
 
@@ -36,6 +52,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+    swig.setDefaults({ cache: false });
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
