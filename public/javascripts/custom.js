@@ -21,7 +21,16 @@ var hotelCounter = 0;
 var thingCounter = 0;
 var restaurantCounter = 0;
 var dayCounter = 2;
+var hotelPlanList = $("#plan-hotel");
+var thingPlanList = $("#plan-things");
+var restaurantPlanList = $("#plan-restaurants");
 
+//variables used by add buttons
+var selects = {
+  hotels: [$("#hotel-selector"), hotelObj, hotelPlanList, hotelCounter, 1],
+  thingsToDo: [$("#thing-selector") , thingObj, thingPlanList, thingCounter, 3],
+  restaurants: [$("#restaurant-selector"), restaurantObj, restaurantPlanList, restaurantCounter, 3]
+ };
 
   //adds new day to the nav bar
   $('#add-day').click(function(){
@@ -31,12 +40,6 @@ var dayCounter = 2;
   });
 
 
-var selects = {
-  hotels: [$("#hotel-selector"), hotelObj, hotelCounter, ],
-  thingsToDo: [$("#thing-selector") , thingObj, thingCounter],
-  restaurants: [$("#restaurant-selector"), restaurantObj, restaurantCounter]
- };
-
 $(".addBtn").on('click',function() {
   event.preventDefault();
   var $this = $(this);
@@ -44,10 +47,22 @@ $(".addBtn").on('click',function() {
   // this will be "thingsToDo", "restaurants", or "hotels"
   var matchingSelectName = $this.attr('data-select');
   var matchingSelect = selects[matchingSelectName];
-  var itemObj = matchingSelect[1];
   var selectedValue = matchingSelect[0].val();
-  console.log(selectedValue);
+  var itemObj = matchingSelect[1];
+  var listToAppendTo = matchingSelect[2];
+  var counter = matchingSelect[3];
+  var limit = matchingSelect[4];
 
+console.log(itemObj[selectedValue]);
+
+  if(counter < limit){
+    listToAppendTo.append('<li>' +itemObj[selectedValue].name+ '</li>');
+    matchingSelect[3]++;
+  } else {
+    alert("You have reached the maximum number of items.");
+  }
+
+//adds the marker to the map
   var latlng = new google.maps.LatLng(itemObj[selectedValue].place[0].location[0],itemObj[selectedValue].place[0].location[1]);
 
   var marker = new google.maps.Marker({
@@ -55,6 +70,7 @@ $(".addBtn").on('click',function() {
     map: map,
     title: 'Hello World!'
   });
+});
 
 
 
@@ -66,14 +82,7 @@ $(".addBtn").on('click',function() {
 
 
 // $("#add-hotel").click(function(){
-//   if(hotelCounter < 1){
-//     var selected = $("#hotel-selector").val();
-//     $("#plan-hotel").append('<li>' +selected+ '</li>');
-//     hotelCounter++;
-//   } else {
-//     alert("You have reached the maximum number of hotels.");
-//   }
-// });
+
 
 // $("#add-thingtodo").click(function(){
 //   if(thingCounter < 3){
@@ -97,5 +106,3 @@ $(".addBtn").on('click',function() {
 
 //adds map marker on click
 
-
-});
