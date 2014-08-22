@@ -14,28 +14,28 @@
         <h3>Hotels</h3>
         <select id="hotel-selector" class="form-control">
             {% for hotel in hotels %}
-              <option value="{{hotel.name}}">{{hotel.name}}</option>
+              <option value="{{hotel.id}}">{{hotel.name}}</option>
             {% endfor %}
         </select>
-        <button id="add-hotel" class="btn btn-primary" >Add</button>
+        <button data-select="hotels" id="add-hotel" class="btn btn-primary addBtn" >Add</button>
       </div><!-- /#hotel-dropdown -->
       <div id="thingstodo-dropdown" class="col-lg-4">
         <h3>Things To Do</h3>
         <select id="thing-selector" class="form-control">
             {% for thing in thingstodo %}
-              <option value="{{thing.name}}">{{thing.name}}</option>
+              <option value="{{thing.id}}">{{thing.name}}</option>
             {% endfor %}
         </select>
-        <button id="add-thingtodo" class="btn btn-primary" >Add</button>
+        <button data-select="thingsToDo" id="add-thingtodo" class="btn btn-primary addBtn" >Add</button>
       </div><!-- /#thingstodo-dropdown -->
       <div id="restaurant-dropdown" class="col-lg-4">
         <h3>Restaurants</h3>
         <select id="restaurant-selector" class="form-control">
             {% for restaurant in restaurants %}
-              <option value="{{restaurant.name}}">{{restaurant.name}}</option>
+              <option value="{{restaurant.id}}">{{restaurant.name}}</option>
             {% endfor %}
         </select>
-        <button id="add-restaurant" class="btn btn-primary" >Add</button>
+        <button data-select="restaurants" id="add-restaurant" class="btn btn-primary addBtn" >Add</button>
       </div><!-- /#restaurant-dropdown -->
     </form><!-- /.form-inline -->
   </div><!-- /.dropdowns -->
@@ -71,22 +71,21 @@
   {% autoescape false %}
   var all_hotels = {{ hotels | json }};
   var all_restaurants = {{ restaurants | json }};
-  var all_things_to_do = {{ things_to_do | json }};
+  var all_things_to_do = {{ thingstodo | json }};
   var all_days = {{ days | json }};
   {% endautoescape %}
 </script>
 
 
 <!-- Map goes here -->
-
-
   <script type="text/javascript">
+  var map;
     function initialize() {
       var mapOptions = {
         center: new google.maps.LatLng(40.716916, -73.995402),
         zoom: 13
       };
-      var map = new google.maps.Map(document.getElementById("map-canvas"),
+      map = new google.maps.Map(document.getElementById("map-canvas"),
           mapOptions);
     }
     google.maps.event.addDomListener(window, 'load', initialize);
