@@ -20,10 +20,15 @@ body {
     border: 1px solid gray; }
   body a {
     color: #00B7FF; }
+  body .plan-info {
+    display: block; }
   body button {
     display: inline-block; }
     body button #add-day {
       display: block; }
+  body label {
+    display: block;
+    font-size: 24px; }
   body select {
     margin-top: auto 0;
     display: inline-block;

@@ -2,16 +2,15 @@
 
 {% block content %}
 
-
-  <div class="row-top row col-lg-12">
-    <div class="days col-lg-3">
-      <p id="intro-text">Trip Planner is a tool you can use to plan your trip! Add items to your plan by using the add buttons. You can add additional days to your trip by clicking the button below. Enjoy!</p>
+  <div class="row-top row col-sm-12">
+    <div class="days col-sm-3">
+      <p id="intro-text">Trip Planner is a tool you can use to plan your trip! You can add additional days to your trip by clicking the button below. Enjoy!</p>
       <button id="add-day" class="btn btn-primary center-block">Add Day</button>
     </div><!-- day-buttons -->
-  <div class="dropdowns col-lg-9 col-md-12">
+  <div class="dropdowns col-sm-9 col-sm-12">
     <form class="form-inline">
-      <div id="hotel-dropdown" class="col-lg-4">
-        <h3>Hotels</h3>
+      <div id="hotel-dropdown" class="col-sm-4">
+        <label for="hotel-selector">Hotels</label>
         <select id="hotel-selector" class="form-control">
             {% for hotel in hotels %}
               <option value="{{hotel.id}}">{{hotel.name}}</option>
@@ -19,8 +18,8 @@
         </select>
         <button data-select="hotels" id="add-hotel" class="btn btn-primary addBtn" >Add</button>
       </div><!-- /#hotel-dropdown -->
-      <div id="thingstodo-dropdown" class="col-lg-4">
-        <h3>Things To Do</h3>
+      <div id="thingstodo-dropdown" class="col-sm-4">
+        <label for="thing-selector">Things To Do</label>
         <select id="thing-selector" class="form-control">
             {% for thing in thingstodo %}
               <option value="{{thing.id}}">{{thing.name}}</option>
@@ -28,8 +27,8 @@
         </select>
         <button data-select="thingsToDo" id="add-thingtodo" class="btn btn-primary addBtn" >Add</button>
       </div><!-- /#thingstodo-dropdown -->
-      <div id="restaurant-dropdown" class="col-lg-4">
-        <h3>Restaurants</h3>
+      <div id="restaurant-dropdown" class="col-sm-4">
+        <label for="restaurant-selector">Restaurants</label>
         <select id="restaurant-selector" class="form-control">
             {% for restaurant in restaurants %}
               <option value="{{restaurant.id}}">{{restaurant.name}}</option>
@@ -40,9 +39,9 @@
     </form><!-- /.form-inline -->
   </div><!-- /.dropdowns -->
   </div><!-- /.row-top -->
-  <div class="row-bottom row col-lg-12">
-    <div class="plan-info col-lg-3 col-md-12">
-      <h2>Plan for day {{daynumber}}</h2>
+  <div class="row-bottom row col-md-12">
+    <div class="plan-info col-md-3 col-sm-12">
+      <h2 id="plan-for-day">Plan For Day 1</h2>
         <h3>Hotel</h3><br>
         <ul id="plan-hotel" class="plan-items"></ul>
         <h3>Things to Do</h3><br>
@@ -50,21 +49,10 @@
         <h3>Restaurants</h3><br>
         <ul id="plan-restaurants" class="plan-items"></ul>
     </div><!-- /.plan-info -->
-    <div id="map-canvas" class="col-lg-9 col-md-12">
+    <div id="map-canvas" class="col-sm-9 col-sm-12">
     </div><!-- /.map-canvas -->
 
   </div><!-- /.row-bottom -->
-
-
-
-
-<!--   <ul>
-    {% for restaurant in restaurants %}
-      <li>{{restaurant.name}}</li>
-    {% endfor %}
-  </ul> -->
-
-
 
 
 <script>
@@ -78,16 +66,5 @@
 
 
 <!-- Map goes here -->
-  <script type="text/javascript">
-  var map;
-    function initialize() {
-      var mapOptions = {
-        center: new google.maps.LatLng(40.716916, -73.995402),
-        zoom: 13
-      };
-      map = new google.maps.Map(document.getElementById("map-canvas"),
-          mapOptions);
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-  </script>
+
 {% endblock %}
