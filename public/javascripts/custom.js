@@ -16,11 +16,10 @@ $(document).ready(function(){
     this.hotels = [];
     this.thingsToDo = [];
     this.restaurants = [];
-    this.markers = [];
   }
 
   Day.prototype.addActivity = function(type, id){
-
+    return dayArray[currentDay-1][type].push(selects[type].itemObj[id]);
   }
 
   var dayArray = [];
@@ -28,48 +27,25 @@ $(document).ready(function(){
   var currentDay = 1;
 
 //turn data into readable obj
-  var hotelObj = {};
+  var hotelsObj = {};
   for(var i = 0; i < all_hotels.length; i++){
-    hotelObj[all_hotels[i]._id] = all_hotels[i];
+    hotelsObj[all_hotels[i]._id] = all_hotels[i];
   };
 
-  var thingObj = {};
+  var thingsToDoObj = {};
   for(var i = 0; i < all_things_to_do.length; i++){
-    thingObj[all_things_to_do[i]._id] = all_things_to_do[i];
+    thingsToDoObj[all_things_to_do[i]._id] = all_things_to_do[i];
   };
 
-  var restaurantObj = {};
+  var restaurantsObj = {};
   for(var i = 0; i < all_restaurants.length; i++){
-    restaurantObj[all_restaurants[i]._id] = all_restaurants[i];
+    restaurantsObj[all_restaurants[i]._id] = all_restaurants[i];
   };
 
-
-
-//map marker push/insertion/removal functions
-function pushMarker(coords){
-  var marker = new google.maps.Marker({
-      position: coords,
-      setMap: map,
-      title: 'Hello World!'
-    });
-  dayArray[currentDay-1].markers.push(marker);
-};
-
-  function insertMarkers(){
-    for(var i=0; i<dayArray[currentDay-1].markers.length; i++){
-      console.log(dayArray[currentDay-1].markers[i]);
-      dayArray[currentDay-1].markers[i].setMap(map);
-    };
-  };
-
-  function removeMarkers(){
-    setAllMap(null);
-  }
 
   //sets on click action for day 1 button
   $('#day1').on('click', function(){
     currentDay = 1;
-    insertMarkers();
     insertPlanItems();
     $("#plan-for-day").text("Plan for Day "+currentDay);
   });
@@ -82,41 +58,54 @@ function pushMarker(coords){
     $daybutton.on('click', function(){
       currentDay = $daybutton.attr('data-day');
       $("#plan-for-day").text("Plan for Day "+currentDay);
-      insertMarkers();
       insertPlanItems();
     });
     $('#nav-days').append($daybutton);
   });
 
 //variables used by add buttons
-// selects[0] = select list
-// selects[1] = data object
-// selects[2] = itinerary list
-// selects[3] = limit of items per day
   var selects = {
-    hotels: [$("#hotel-selector"), hotelObj, $("#plan-hotel"), 1],
-    thingsToDo: [$("#thing-selector") , thingObj, $("#plan-things"), 3],
-    restaurants: [$("#restaurant-selector"), restaurantObj, $("#plan-restaurants"), 3]
+    hotels: {
+      selector: $("#hotel-selector"),
+      itemObj: hotelsObj,
+      itinerarySection: $("#plan-hotel"),
+      limit: 1
+    },
+    thingsToDo: {
+      selector: $("#thing-selector"),
+      itemObj: thingsToDoObj,
+      itinerarySection: $("#plan-things"),
+      limit: 3
+    },
+    restaurants: {
+      selector: $("#restaurant-selector"),
+      itemObj: restaurantsObj,
+      itinerarySection: $("#plan-restaurants"),
+      limit: 3
+    },
   };
 
   $(".addBtn").on('click',function() {
     event.preventDefault();
+    var day = dayArray[currentDay-1];
     var $this = $(this);
     var matchingSelectName = $this.attr('data-select');
     var matchingSelect = selects[matchingSelectName];
-    var selectedValue = matchingSelect[0].val();
-    var itemObj = matchingSelect[1];
-    var listToAppendTo = matchingSelect[2];
-    var limit = matchingSelect[3];
-    var counter = dayArray[currentDay-1][matchingSelectName].length;
+    var selectedValue = matchingSelect.selector.val();
+    var itemObj = matchingSelect.itemObj;
+    var listToAppendTo = matchingSelect.itinerarySection;
+    var limit = matchingSelect.limit;
+    var counter = day[matchingSelectName].length;
 
   //check counter and append to itinerary
-    if((dayArray[currentDay-1][matchingSelectName].contains(selectedValue))){
+    console.log(day[matchingSelectName]);
+    console.log(day[matchingSelectName].contains(selectedValue));
+    console.log(matchingSelect.selector.val());
+    if((day[matchingSelectName].contains(selectedValue))){
       alert("You have already added this item to your itinerary.");
     }
     else if(counter < limit){
-      // listToAppendTo.append('<li>' +itemObj[selectedValue].name+ '</li>');
-      dayArray[currentDay-1][matchingSelectName].push(selectedValue);
+      day.addActivity(matchingSelectName, selectedValue);
       insertPlanItems();
     } else {
       alert("You have reached the maximum number of items.");
@@ -124,23 +113,27 @@ function pushMarker(coords){
 
   //adds the marker to the map
     var latlng = new google.maps.LatLng(itemObj[selectedValue].place[0].location[0],itemObj[selectedValue].place[0].location[1]);
-    pushMarker(latlng);
+    console.log(latlng);
 
   });
 
 //update itinerary each function
   function insertPlanItems(){
+    var day = dayArray[currentDay-1]
     $("#plan-hotel").empty();
-    for(var i=0; i<dayArray[currentDay-1].hotels.length; i++){
-      $("#plan-hotel").append('<li>' +hotelObj[dayArray[currentDay-1].hotels[i]].name+ '</li>')
+    for(var i=0; i<day.hotels.length; i++){
+      var hotel = day.hotels[i];
+      $("#plan-hotel").append('<li>' +hotelsObj[hotel._id].name+ '</li>');
     }
     $("#plan-things").empty();
     for(var i=0; i<dayArray[currentDay-1].thingsToDo.length; i++){
-      $("#plan-things").append('<li>' +thingObj[dayArray[currentDay-1].thingsToDo[i]].name+ '</li>')
+      var thing = day.thingsToDo[i];
+      $("#plan-things").append('<li>' +thingsToDoObj[thing._id].name+ '</li>');
     }
     $("#plan-restaurants").empty();
     for(var i=0; i<dayArray[currentDay-1].restaurants.length; i++){
-      $("#plan-restaurants").append('<li>' +restaurantObj[dayArray[currentDay-1].restaurants[i]].name+ '</li>')
+      var restaurant = day.restaurants[i];
+      $("#plan-restaurants").append('<li>' +restaurantsObj[restaurant._id].name+ '</li>')
     }
   }
 
