@@ -23,9 +23,13 @@ body {
   body .plan-info {
     display: block; }
   body button {
-    display: inline-block; }
+    display: block; }
     body button #add-day {
       display: block; }
+    body button.btn-delete-activity {
+      display: none; }
+  body .activity:hover .btn-delete-activity {
+    display: inline-block; }
   body label {
     display: block;
     font-size: 24px; }

@@ -40,10 +40,17 @@ body {
 
 //---------------- BUTTON STYLES -------------------
   button {
-    display: inline-block;
+    display: block;
     #add-day {
       display: block;
     }
+    &.btn-delete-activity {
+      display: none;
+    }
+  }
+
+  .activity:hover .btn-delete-activity {
+    display:inline-block;
   }
 
   label {

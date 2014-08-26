@@ -35,13 +35,11 @@ var restaurantSchema = new Schema({
 });
 
 var daySchema = new Schema({
-  number: Number,
-  hotel: [hotelSchema],
-  thingsToDo: [thingsToDoSchema],
-  restaurants: [restaurantSchema]
+  day_number: Number,
+  hotels: [{type: Schema.Types.ObjectId, ref: "Hotel"}],
+  thingsToDo: [{type: Schema.Types.ObjectId, ref: "Restaurant"}],
+  restaurants: [{type: Schema.Types.ObjectId, ref: "ThingsToDo"}]  ,
 });
-
-
 
 Place = mongoose.model('Place', placeSchema);
 Hotel = mongoose.model('Hotel', hotelSchema);
