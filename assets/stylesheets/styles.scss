@@ -7,7 +7,19 @@ body {
 
   nav {
     display: block;
+  li {
+    &.selected {
+      a {
+        color: #FFF;
+        &:visited, &:active {
+          color: #fff;
+        }
+
+      }
+    }
   }
+  }
+
 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 
@@ -37,20 +49,28 @@ body {
     display: block;
   }
 
+  li .activity {
+    display: block;
+    margin: auto;
+  }
 
 //---------------- BUTTON STYLES -------------------
   button {
     display: block;
-    #add-day {
-      display: block;
-    }
+
+
+
     &.btn-delete-activity {
-      display: none;
+      visibility: hidden;
+      margin-left: 10px;
+      background-color: #2E2E2E;
+      color: #E6E6E6;
     }
   }
 
   .activity:hover .btn-delete-activity {
-    display:inline-block;
+    visibility: visible;
+    color: #E6E6E6;
   }
 
   label {

@@ -5,6 +5,10 @@ body {
     text-align: center; }
   body nav {
     display: block; }
+    body nav li.selected a {
+      color: #FFF; }
+      body nav li.selected a:visited, body nav li.selected a:active {
+        color: #fff; }
   body .row {
     display: block;
     margin: 0;
@@ -22,14 +26,19 @@ body {
     color: #00B7FF; }
   body .plan-info {
     display: block; }
+  body li .activity {
+    display: block;
+    margin: auto; }
   body button {
     display: block; }
-    body button #add-day {
-      display: block; }
     body button.btn-delete-activity {
-      display: none; }
+      visibility: hidden;
+      margin-left: 10px;
+      background-color: #2E2E2E;
+      color: #E6E6E6; }
   body .activity:hover .btn-delete-activity {
-    display: inline-block; }
+    visibility: visible;
+    color: #E6E6E6; }
   body label {
     display: block;
     font-size: 24px; }
